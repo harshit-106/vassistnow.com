@@ -2027,23 +2027,41 @@
         document.getElementById('app-container').scrollTop = 0;
       }
 
-      function handleContactSubmit(event) {
+     function handleContactSubmit(event) {
         event.preventDefault();
 
         const form = event.target;
-        const successMessage = document.getElementById('form-success-message');
 
-        // Show success message
+        const name = form.name.value;
+        const email = form.email.value;
+        const phone = form.phone.value;
+        const company = form.company.value;
+        const message = form.message.value;
+
+        const toEmail = 'yourcompany@gmail.com'; // 👈 apna email yahan daalo
+        const subject = encodeURIComponent('New Contact Form Submission');
+        const body = encodeURIComponent(
+          `Name: ${name}\n` +
+            `Email: ${email}\n` +
+            `Phone: ${phone}\n` +
+            `Company: ${company}\n\n` +
+            `Message:\n${message}`
+        );
+
+        // Gmail / Mail app open karega
+        window.location.href = `mailto:${toEmail}?subject=${subject}&body=${body}`;
+
+        // Optional: success message
+        const successMessage = document.getElementById('form-success-message');
         successMessage.classList.remove('hidden');
 
-        // Reset form
         form.reset();
 
-        // Hide success message after 5 seconds
         setTimeout(() => {
           successMessage.classList.add('hidden');
         }, 5000);
       }
+
 
       async function onConfigChange(config) {
         const baseFontStack = '-apple-system, BlinkMacSystemFont, sans-serif';
@@ -2468,3 +2486,4 @@
     </script>
   </body>
 </html>
+
